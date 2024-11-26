@@ -1,13 +1,28 @@
 import {
-  ImageBackground,
+  Animated,
+  ImageBackground, Platform,
   StyleSheet,
   Text,
   View
 } from 'react-native';
 import {Colors, FontSize, Gap} from "./shared/tokens";
 import Button from "./shared/Button/Button";
+import {useEffect} from "react";
 
 export default function App() {
+  const animatedValue = new Animated.Value(-76);
+  const opacity = animatedValue.interpolate({
+    inputRange: [-76, 0],
+    outputRange: [0, 1]
+  });
+
+  useEffect(() => {
+    Animated.timing(animatedValue, {
+      toValue: 0,
+      duration: 1000,
+      useNativeDriver: true
+    }).start()
+  }, [])
 
   return (
     <View style={styles.container}>
@@ -18,10 +33,18 @@ export default function App() {
       >
         <View style={styles.contentStack}>
           <View style={styles.textStack}>
-            <Text style={styles.headingText}>Одно из самых вкусных кофе в городе!</Text>
+            <Animated.Text
+                style={{
+                  ...styles.headingText,
+                  transform: [
+                    {translateY: animatedValue}
+                  ],
+                  opacity: opacity
+                }}
+            >Одно из самых вкусных кофе в городе!</Animated.Text>
             <Text style={styles.descriptionText}>Свежие зёрна, настоящая арабика и бережная обжарка</Text>
           </View>
-          <Button text={"Начать"}/>
+          <Button text={"Начать"} />
         </View>
       </ImageBackground>
     </View>
@@ -45,7 +68,7 @@ const styles = StyleSheet.create({
     gap: Gap.g24,
     paddingHorizontal: 30,
     paddingTop: 52,
-    paddingBottom: 24
+    paddingBottom: Platform.OS === 'ios' ? 43 : 25
   },
   textStack: {
     alignItems: "center",
@@ -54,7 +77,6 @@ const styles = StyleSheet.create({
   headingText: {
     fontSize: FontSize.f34,
     fontWeight: "600",
-    fontStyle: "normal",
     textAlign: "center",
     color: Colors.white
   },
