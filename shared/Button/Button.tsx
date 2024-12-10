@@ -7,8 +7,17 @@ import {
   Animated,
 } from "react-native";
 import { Colors, Fonts, FontSize, Radius } from "../tokens";
+import { ReactNode } from "react";
 
-const Button = ({ text, ...props }: PressableProps & { text?: string }) => {
+const Button = ({
+  text,
+  icon,
+  style,
+  ...props
+}: PressableProps & {
+  text?: string;
+  icon?: ReactNode;
+}) => {
   const animatedValue = new Animated.Value(100);
   const color = animatedValue.interpolate({
     inputRange: [0, 100],
@@ -44,8 +53,10 @@ const Button = ({ text, ...props }: PressableProps & { text?: string }) => {
         style={{
           ...styles.button,
           backgroundColor: color,
+          ...style,
         }}
       >
+        {icon && icon}
         {text && <Text style={styles.text}>{text}</Text>}
       </Animated.View>
     </Pressable>

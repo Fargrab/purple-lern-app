@@ -9,7 +9,7 @@ import {
 import { Colors, Fonts, FontSize, Gap } from "../shared/tokens";
 import Button from "../shared/Button/Button";
 import { useEffect } from "react";
-import { Link } from "expo-router";
+import { router } from "expo-router";
 
 export default function App() {
   const animatedValue = new Animated.Value(-76);
@@ -25,6 +25,10 @@ export default function App() {
       useNativeDriver: true,
     }).start();
   }, []);
+
+  const routedOnCatalog = () => {
+    router.replace("/(tabs)/catalog");
+  };
 
   return (
     <View style={styles.container}>
@@ -48,18 +52,7 @@ export default function App() {
               Свежие зёрна, настоящая арабика и бережная обжарка
             </Text>
           </View>
-          <Button text={"Начать"} />
-          {/*TODO::Потом удалить. Временная ссылка для пеходов*/}
-          <Link
-            href={"/catalog"}
-            style={{
-              color: Colors.white,
-              fontSize: FontSize.f34,
-              textAlign: "center",
-            }}
-          >
-            В каталог
-          </Link>
+          <Button text={"Начать"} onPress={routedOnCatalog} />
         </View>
       </ImageBackground>
     </View>
