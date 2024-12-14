@@ -1,5 +1,5 @@
 import { Text, View } from "react-native";
-import { Colors, FontSize } from "../shared/tokens";
+import { Colors, FontSize } from "../../shared/tokens";
 import { Link } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 
